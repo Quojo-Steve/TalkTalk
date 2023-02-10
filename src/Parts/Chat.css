@@ -1,0 +1,22 @@
+.tops{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.text h1{
+    font-weight: 600;
+    color: white;
+    font-size: large;
+}
+.text h4{
+    color: white;
+    font-size: small;
+}
+.tops img{
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.411);
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
