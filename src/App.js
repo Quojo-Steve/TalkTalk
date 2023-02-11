@@ -4,6 +4,7 @@ import { dataLoader } from "./Pages/Name";
 import Name from "./Pages/Name";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import Trial from "./Parts/Trial";
 
 function App() {
   const router = createBrowserRouter(
@@ -12,6 +13,7 @@ function App() {
         <Route path="home/*" element={<Welcome />} />
         <Route index element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/trial" element={<Trial />} />
         <Route path="/name" element={<Name />} loader={dataLoader} />
       </Route>
     )

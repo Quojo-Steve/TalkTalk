@@ -11,6 +11,7 @@
 .text h4{
     color: white;
     font-size: small;
+    margin-bottom: 5px;
 }
 .tops img{
     width: 30px;
@@ -19,4 +20,63 @@
     padding: 5px;
     border-radius: 50%;
     cursor: pointer;
+}
+.linkss{
+    display: flex;
+}
+.linkss a{
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.486);
+    margin-left: 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.linkss a:first-child{
+    background: dodgerblue;
+}
+.linkss a img{
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+}
+.linksss{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.linksss button{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5px;
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+.linksss .active{
+    color: dodgerblue;
+    background: rgba(30, 143, 255, 0.205);
+}
+.linksss .not{
+    color: white;
+    background: rgba(255, 255, 255, 0.486);
+}
+.chat{
+    position: absolute;
+    left: 0;
+    color: white;
+}
+.chatnot{
+    position: absolute;
+    left: -100px;
+}
+.groups{
+    position: absolute;
+    left: 0;
+    color: white;
+}
+.groupsnot{
+    position: absolute;
+    right: 1000px;
 }
