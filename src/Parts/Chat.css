@@ -1,3 +1,7 @@
+body{
+    background: #23242a;
+    overflow-y: hidden;
+}
 .tops{
     display: flex;
     justify-content: space-between;
@@ -24,20 +28,36 @@
 .linkss{
     display: flex;
 }
-.linkss a{
+.chatsss{
+    background: dodgerblue;
+}
+.chatsssnot{
+    background: rgba(255, 255, 255, 0.486);
+}
+.linkss button{
     display: flex;
     color: white;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.486);
+    /* background: rgba(255, 255, 255, 0.486); */
     margin-left: 5px;
     padding: 5px 10px;
     border-radius: 10px;
 }
-.linkss a:first-child{
+
+.peoplesss{
     background: dodgerblue;
 }
-.linkss a img{
+.peoplesssnot{
+    background: rgba(255, 255, 255, 0.486);
+}
+.groupsss{
+    background: dodgerblue;
+}
+.groupsssnot{
+    background: rgba(255, 255, 255, 0.486);
+}
+.linkss button img{
     margin-right: 5px;
     height: 20px;
     width: 20px;
@@ -46,6 +66,8 @@
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
+    margin-bottom: 20px;
+
 }
 .linksss button{
     display: flex;
@@ -62,21 +84,84 @@
     color: white;
     background: rgba(255, 255, 255, 0.486);
 }
-.chat{
-    position: absolute;
-    left: 0;
+.chat, .groups{
     color: white;
+    position: absolute;
+    height: 45vh;
+    overflow-y: scroll;
+    transition: all 0.3s ease-in-out;
+}
+.chat::-webkit-scrollbar,
+.groups::-webkit-scrollbar{
+    width: 0.5rem;
+}
+.chat::-webkit-scrollbar-track,
+.groups::-webkit-scrollbar-track{
+    background: transparent;
+}
+.chat::-webkit-scrollbar-thumb,
+.groups::-webkit-scrollbar-thumb{
+    background: darkcyan;
 }
 .chatnot{
     position: absolute;
-    left: -100px;
-}
-.groups{
-    position: absolute;
-    left: 0;
-    color: white;
+    left: -1000px;
+    transition: all 0.3s ease-in-out;
 }
 .groupsnot{
     position: absolute;
     right: 1000px;
+    transition: all 0.3s ease-in-out;
+}
+.chaturl{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    padding: 10px 20px;
+    width: 280px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.075);
+
+}
+.chaturl1{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 10px 20px;
+    width: 280px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.075);
+
+}
+.chaturl a{
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+.selected{
+    background: rgba(255, 255, 255, 0.301);
+}
+.chaturl .image, .chaturl1 .image{
+    height: 50px;
+    width: 50px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-left: 14px;
+    background: grey;
+}
+.username{
+    color: dodgerblue;
+}
+.join{
+    width: 40px;
+    height: 40px;
+    background: rgba(30, 143, 255, 0.39);
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+.mes{
+    width: 40px;
+    height: 40px;
+    background: rgba(25, 221, 18, 0.411);
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
 }

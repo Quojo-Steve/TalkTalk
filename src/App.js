@@ -5,12 +5,14 @@ import Name from "./Pages/Name";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Trial from "./Parts/Trial";
+import Main from "./Content/Main";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         <Route path="home/*" element={<Welcome />} />
+        <Route path="home/chat/:id" element={<Signup />} />
         <Route index element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/trial" element={<Trial />} />

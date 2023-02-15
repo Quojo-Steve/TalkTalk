@@ -2,8 +2,9 @@ import React from 'react'
 import './Login.css'
 
 const Login = () => {
-  return (
-    <div className="box">
+    return (
+      <div className="body">
+            <div className="box">
         <div className="form">
             <h2>Sign In</h2>
             <div className="inputBox">
@@ -23,6 +24,8 @@ const Login = () => {
             <input type="submit" value="Login" />
         </div>
     </div>
+      </div>
+    
   )
 }
 

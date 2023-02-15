@@ -3,8 +3,9 @@ import './Login.css'
 
 
 const Signup = () => {
-  return (
-    <div className="box">
+    return (
+      <div className="body">
+            <div className="box">
         <div className="form">
             <h2>Sign Up</h2>
             <div className="inputBox">
@@ -39,6 +40,8 @@ const Signup = () => {
             <input type="submit" value="Register" />
         </div>
     </div>
+      </div>
+    
   )
 }
 

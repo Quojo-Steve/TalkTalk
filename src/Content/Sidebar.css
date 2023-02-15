@@ -209,7 +209,8 @@ body{
     z-index: 10;
 }
 .panel{
-    position: absolute;
+    position: relative;
+    position: fixed;
     background-color: #12171e;
     min-height: 100vh;
     top: 0;
