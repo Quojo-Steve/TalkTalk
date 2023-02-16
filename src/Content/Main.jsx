@@ -1,9 +1,24 @@
-import React from "react";
-import "./Main.css";
+import React,{useState,useEffect} from "react";
+// import "./Main.css";
 import picture from "../images/IMG_1600.JPG";
 import message from "../images/chat_48px_green.png";
+import { useParams } from "react-router-dom";
+import { Dummy } from '../Dummy';
 
 const Main = (props) => {
+  const { id } = useParams();
+  const [param, setParam] = useState(false);
+  useEffect(() => {
+    if (id !== undefined) {
+      setParam(true);
+    } else {
+      setParam(false)
+    }
+  },[])
+  
+  if (id != undefined) {
+    console.log(id);
+  }
   let main = "main",
     people = "mainpeoplenot",
     groups = "maingroupnot";
@@ -23,7 +38,18 @@ const Main = (props) => {
   }
   return (
     <div>
-      <div className={main}>{props.type}</div>
+      <div className={main}>
+        {param ?
+          <div className="bg-slate-700 text-yellow-300">
+            <h1>{Dummy[id - 1].name}</h1>{" "}
+            <p>{Dummy[id - 1].username}</p>{" "}
+          </div>
+          :
+          <div>{props.type}</div>
+        }
+      
+      
+      </div>
       <div className={people}>
         <a href="" className="single p-4">
           <img
