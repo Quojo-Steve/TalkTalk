@@ -11,6 +11,7 @@ import "./Main.css";
 import { useNavigate } from "react-router-dom";
 import { Dummy } from "../Dummy";
 import { useParams } from "react-router-dom";
+import Display from "./Display";
 
 const Chat = () => {
   const [isChat, setischat] = useState(true);
@@ -140,7 +141,7 @@ const Chat = () => {
           {Dummy.map((perso) => {
             return (
               <a
-                className="chaturl1 selected"
+                className="chaturl1 selected cursor-pointer"
                 onClick={() => {
                   navigate(`/home/${perso.id}`);
                   renderer();
@@ -184,9 +185,13 @@ const Chat = () => {
       <div>
         <div className={main}>
           {param ? (
-            <div className="bg-slate-700 text-yellow-300">
-              <h1>{Dummy[id - 1].name}</h1> <p>{Dummy[id - 1].username}</p>{" "}
-            </div>
+            // <div className="chatarea">
+            //   <div className="bg-slate-700 text-red-300">
+            //     <img src={Dummy[id - 1].image} alt="" />
+            //     <h1>{Dummy[id - 1].name}</h1> <p>{Dummy[id - 1].username}</p>{" "}
+            //   </div>
+            // </div>
+          <Display />
           ) : (
             <div>{group}</div>
           )}
@@ -194,32 +199,34 @@ const Chat = () => {
         <div className={people}>
           {Dummy.map((persona) => {
             return (
-              <a href="" className="single p-4" onClick={() => {
-                navigate(`/home/${persona.id}`);
-                renderer();
-                
-              }}>
-            <img
-              src={persona.image}
-              alt=""
-              className="h-14 w-14 rounded-full object-cover "
-            />
-            <div>
-                  <p className="text-center text-xl">{ persona.name }</p>
-                  <p className="text-xs text-center">{ persona.username }</p>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-              <img
-                src={message}
-                alt=""
-                className="w-10 h-10 bg-green-500 rounded-full p-2"
-              />
-              <b className="text-green-500">Message</b>
-            </div>
-          </a>)
+              <a
+                href=""
+                className="single p-4"
+                onClick={() => {
+                  navigate(`/home/${persona.id}`);
+                  renderer();
+                }}
+              >
+                <img
+                  src={persona.image}
+                  alt=""
+                  className="h-14 w-14 rounded-full object-cover "
+                />
+                <div>
+                  <p className="text-center text-xl">{persona.name}</p>
+                  <p className="text-xs text-center">{persona.username}</p>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    src={message}
+                    alt=""
+                    className="w-10 h-10 bg-green-500 rounded-full p-2"
+                  />
+                  <b className="text-green-500">Message</b>
+                </div>
+              </a>
+            );
           })}
-          
-          
         </div>
         <div className={groups}>
           <div href="" className="single p-4">

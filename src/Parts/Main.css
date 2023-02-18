@@ -6,11 +6,10 @@
     transition: all 0.5s ease;
     width: 68.4vw;
     padding: 10px 2rem;
-    background: red;
 }
 .mainnot{
     position: absolute;
-    left: -100px;
+    left: -300px;
 
 }
 .mainpeople{

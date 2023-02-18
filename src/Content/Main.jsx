@@ -37,7 +37,7 @@ const Main = (props) => {
     groups = "maingroup";
   }
   return (
-    <div>
+    <div style={{display: "none"}}>
       <div className={main}>
         {param ?
           <div className="bg-slate-700 text-yellow-300">

@@ -10,25 +10,28 @@ import settings from "../images/settings_48px.png";
 import moon from "../images/moon_man_100px.png";
 import logout from "../images/Power Off Button_128px.png";
 import close from "../images/close_100px.png";
+import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Sidebar = () => {
   const [isOpen, setisOpen] = useState(true);
   const [theme, settheme] = useState(true);
   
   return (
+    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
     <div>
       <div className="sidebar1">
         <div className="top">
-          <img src={logo} id="btn" alt="" />
+          <img src={logo || <Skeleton circle width={30} height={30} />} id="btn" alt="" />
         </div>
         <div className="user">
-          <img src={picture} alt="" className={isOpen ? "user-img" : "user-img1"} onClick={()=>setisOpen(!isOpen)} />
+          <img src={picture || <Skeleton circle width={30} height={30} />} alt="" className={isOpen ? "user-img" : "user-img1"} onClick={()=>setisOpen(!isOpen)} />
           <p className="name">Status</p>
         </div>
         <ul>
           <li>
             <a href="#">
-              <img src={favorite} alt="" />
+              <img src={favorite || <Skeleton />} alt="" />
             </a>
             <span className="tooltip">Favorites</span>
           </li>
@@ -91,7 +94,8 @@ const Sidebar = () => {
         </div>
       </div>
       
-    </div>
+      </div>
+      </SkeletonTheme>
   );
 };
 
