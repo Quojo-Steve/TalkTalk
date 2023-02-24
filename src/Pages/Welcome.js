@@ -20,6 +20,7 @@ const Welcome = () => {
     <div className="">
       {loading ? (
         <FadeLoader
+          className="flex justify-center items-center min-h-full"
         size={30}
           color={"dodgerblue"}
       loading={loading}
