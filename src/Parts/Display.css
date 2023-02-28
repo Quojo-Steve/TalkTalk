@@ -30,6 +30,7 @@
     font-weight: 700;
 }
 .detailss p{
+    width: fit-content;
     background: gray;
     padding: 0px 10px;
     border-radius: 10px;
@@ -50,15 +51,24 @@
 .topside .svgs{
     color: white;
     background: rgba(255, 255, 255, 0.144);
-    height: 24px;
-    width: 24px;
-    padding: 5px;
+    font-size: 1.5rem;
+    padding: 4px;
+    
     border-radius: 50%;
-    object-fit: cover;
 }
 .chatside{
+    padding-bottom: 10px;
     max-height: 70vh;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+.chatside::-webkit-scrollbar{
+    width: 0.5rem;
+}
+.chatside::-webkit-scrollbar-track{
+    background: transparent;
+}
+.chatside::-webkit-scrollbar-thumb{
+    background: rgba(0, 139, 139, 0.712);
 }
 .incoming{
     max-width: 500px;
@@ -70,4 +80,106 @@
 .send-message{
     background: #12171e;
     height: 11vh;
+    display: flex;
+    align-items: center;
+}
+.icons{
+    color: dodgerblue;
+    font-size: 2rem;
+    border-radius: 50%;
+    background: rgba(30, 143, 255, 0.171);
+    margin-left: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+.icon-send{
+    color: white;
+    font-size: 2.2rem;
+    padding: 5px;
+    margin-left: 10px;
+    background: dodgerblue;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.input{
+    width: 70%;
+    margin-left: 10px;
+    color: white;
+    padding: 5px 10px;
+    background: transparent;
+    outline: none;
+}
+.profile{
+    position: absolute;
+    background: whitesmoke;
+    height: 100%;
+    width: 250px;
+    top: 0;
+    left: 640px;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+
+}
+.profilenot{
+    transition: all 0.3s ease-in-out;
+    display: none;
+}
+.headings{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.t h1{
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+.t h5{
+    font-size: small;
+}
+.headings .clos{
+    background: #12171e3f;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.infoo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.socials{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.insta{
+    background: orangered;
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 40%;
+}
+.twitter{
+    background: darkturquoise;
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 40%;
+}
+.facebook{
+    background: blue;
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 40%;
+}
+.linked{
+    background: dodgerblue;
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 40%;
 }

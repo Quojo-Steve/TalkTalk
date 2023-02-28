@@ -7,15 +7,6 @@
 body{
     position: relative;
 }
-
-.user-img{
-    margin-top: 80px;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    border: 3px solid dodgerblue;
-    cursor: pointer;
-}
 .user-img1{
     margin-top: 80px;
     width: 50px;

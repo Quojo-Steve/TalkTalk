@@ -25,7 +25,7 @@ const Sidebar = () => {
           <img src={logo || <Skeleton circle width={30} height={30} />} id="btn" alt="" />
         </div>
         <div className="user">
-          <img src={picture || <Skeleton circle width={30} height={30} />} alt="" className={isOpen ? "user-img" : "user-img1"} onClick={()=>setisOpen(!isOpen)} />
+          <img src={picture || <Skeleton circle width={30} height={30} />} alt="" className="user-img1" onClick={()=>setisOpen(!isOpen)} />
           <p className="name">Status</p>
         </div>
         <ul>
