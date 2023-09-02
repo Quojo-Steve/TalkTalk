@@ -8,6 +8,11 @@ const Signup = () => {
             <div className="box">
         <div className="form">
             <h2>Sign Up</h2>
+<div className="inputBox">
+                <input type="text" required="required" />
+                <span>Username</span>
+                <i></i>
+            </div>
             <div className="inputBox">
                 <input type="text" required="required" />
                 <span>First Name</span>
