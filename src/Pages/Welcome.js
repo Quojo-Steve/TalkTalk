@@ -4,34 +4,43 @@ import Recents from "../Content/Recents";
 import loader from "../images/flickr-loading.mp4";
 import { Outlet } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
-
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Welcome = () => {
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
+    if (navigation.state === "loading") {
+      setLoading(true);
+    } else {
       setLoading(false);
-    }, 1000);
+    }
+    // setLoading(true);
+    // setTimeout(()=>{
+    //   setLoading(false)
+    // },5000)
   }, []);
 
   return (
     <div className="">
       {loading ? (
-        <FadeLoader
-          className="flex justify-center items-center min-h-full"
-        size={30}
-          color={"dodgerblue"}
-      loading={loading}
-        />
+        <div className="body">
+          <FadeLoader
+            className="flex justify-center items-center min-h-full"
+            size={30}
+            color={"dodgerblue"}
+            loading={loading}
+          />
+        </div>
       ) : (
         <>
           <Sidebar />
           <Recents />
         </>
       )}
-<Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 };

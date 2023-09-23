@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import { useHistory } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { AuthData } from "../auth/AuthWrapper";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,29 +10,13 @@ const Login = () => {
   const [err, seterr] = useState("");
 
   const navigat = useNavigate();
+  const {login} = AuthData();
 
   const loginfunc = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:7000/token/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const token = data.auth_token;
-
-        localStorage.setItem("token", token);
-
-        navigat("/home");
-      } else {
-        seterr("Invalid credentials");
-      }
+      await login(username, password)
     } catch (error) {
       console.log(error);
     }

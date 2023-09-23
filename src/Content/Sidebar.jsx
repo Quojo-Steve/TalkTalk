@@ -8,39 +8,27 @@ import community from "../images/user_groups_100px.png";
 import notification from "../images/doorbell_48px.png";
 import settings from "../images/settings_48px.png";
 import moon from "../images/moon_man_100px.png";
-import logout from "../images/Power Off Button_128px.png";
+import logoutimg from "../images/Power Off Button_128px.png";
 import close from "../images/close_100px.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { AuthData } from "../auth/AuthWrapper";
 
 const Sidebar = () => {
   const [isOpen, setisOpen] = useState(true);
   const [theme, settheme] = useState(true);
   const [data, setData] = useState(null);
+  const { logout } = AuthData();
+  const { image } = AuthData();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const fetchdata = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:7000/profile", {
-          // method: "GET",
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        });
-        if (response.ok) {
-          const responseData = await response.json();
-          setData(responseData);
-          console.log(responseData.username);
-        } else {
-          console.log("Someting went wrong");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchdata();
-  }, []);
+  const logoutfunc = async (e) => {
+      await logout()
+  };
+
+  useEffect(()=>{
+    setData(image)
+  },[])
+
 
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
@@ -65,9 +53,9 @@ const Sidebar = () => {
           </div> */}
 
           <div className="user">
-            {data && data.image ? (
+            {data ? (
               <img
-                src={data.image}
+                src={data}
                 alt="Profile"
                 className="user-img1"
                 onClick={() => setisOpen(!isOpen)}
@@ -118,9 +106,9 @@ const Sidebar = () => {
               <span className="tooltip">Theme</span>
             </li>
             <li>
-              <a href="#">
-                <img src={logout} alt="" />
-              </a>
+              <button onClick={() => logoutfunc()}>
+                <img src={logoutimg} alt="" id={theme ? "theme" : "theme"} />
+              </button>
               <span className="tooltip">Logout</span>
             </li>
           </ul>
