@@ -41,6 +41,8 @@ export const AuthWrapper = () => {
         setUser(access);
         setisAuthenticated(true);
         localStorage.setItem("authTokens", JSON.stringify(data));
+        let profileimage = "http://127.0.0.1:8000/" + user.image;
+        setImage(profileimage);
         navigate("/");
       } else {
         alert("Something went wrong!!");
@@ -50,7 +52,6 @@ export const AuthWrapper = () => {
   };
 
   const logout = async () => {
-    navigate("/login");
     setAuthTokens(null);
     setUser(null);
     setisAuthenticated(false);
@@ -58,7 +59,6 @@ export const AuthWrapper = () => {
   };
 
   let updateToken = async () => {
-    console.log("update called");
     let response = await fetch(" http://127.0.0.1:8000/api/token/refresh/", {
       method: "POST",
       headers: {
@@ -71,8 +71,8 @@ export const AuthWrapper = () => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      let profileimage = "http://127.0.0.1:8000/"+user.image
-      setImage(profileimage)
+      let profileimage = "http://127.0.0.1:8000/" + user.image;
+      setImage(profileimage);
     } else {
       logout();
     }
@@ -96,7 +96,7 @@ export const AuthWrapper = () => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, authTokens,image }}
+      value={{ user, isAuthenticated, login, logout, authTokens, image }}
     >
       {loading ? null : (
         <>

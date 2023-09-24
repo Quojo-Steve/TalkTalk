@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate,useLocation } from "react-router-dom";
 import { AuthData } from "../auth/AuthWrapper";
 import { nav } from "../navigation/navigation";
 import { useEffect } from "react";
@@ -6,14 +6,16 @@ import { useEffect } from "react";
 export const RenderRoutes = () => {
   const { isAuthenticated } = AuthData();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Use a useEffect to handle navigation
   useEffect(() => {
+    // Inside the useEffect, handle navigation for private routes
     nav.forEach((r, i) => {
-      if (r.isPrivate) {
-        if (!isAuthenticated) {
-          // Redirect unauthenticated user to a login page (customize the path)
-          navigate("/login");
+      if (r.isPrivate && !isAuthenticated) {
+        if(location.pathname === '/signup'){
+          navigate('/signup')
+        } else{
+          navigate('/login')
         }
       }
     });

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import { useHistory } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { AuthData } from "../auth/AuthWrapper";
 
@@ -9,7 +7,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [err, seterr] = useState("");
 
-  const navigat = useNavigate();
   const {login} = AuthData();
 
   const loginfunc = async (e) => {
