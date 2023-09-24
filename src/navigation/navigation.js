@@ -1,7 +1,7 @@
 import Welcome from "../Pages/Welcome";
 import Login from "../Pages/Login";
 import Signup from "../Pages/Signup";
-import Main from "../Content/Main";
+// import Main from "../Content/Main";
 import {Page404} from "../Pages/Page404";
 
 

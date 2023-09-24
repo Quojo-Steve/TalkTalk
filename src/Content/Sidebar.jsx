@@ -22,13 +22,12 @@ const Sidebar = () => {
   const { image } = AuthData();
 
   const logoutfunc = async (e) => {
-      await logout()
+    await logout();
   };
 
-  useEffect(()=>{
-    setData(image)
-  },[])
-
+  useEffect(() => {
+    setData(image);
+  }, []);
 
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
@@ -41,21 +40,11 @@ const Sidebar = () => {
               alt=""
             />
           </div>
-          {/* <div>{ data.username }</div> */}
-          {/* <div className="user">
-            <img
-              src={picture || <Skeleton circle width={30} height={30} />}
-              alt=""
-              className="user-img1"
-              onClick={() => setisOpen(!isOpen)}
-            />
-            <p className="name">Status</p>
-          </div> */}
 
           <div className="user">
-            {data ? (
+            {image ? (
               <img
-                src={data}
+                src={image}
                 alt="Profile"
                 className="user-img1"
                 onClick={() => setisOpen(!isOpen)}
@@ -116,7 +105,7 @@ const Sidebar = () => {
         <div className={isOpen ? "main-content" : "main-content1"}>
           <div className="main-top">
             <div className="left">
-              <img src={picture} alt="Profile picture" loading="lazy" />
+              <img src={data} alt="Profile picture" loading="lazy" />
               <div className="text">
                 <p>My Chat</p>
                 <p>Status</p>

@@ -1,20 +1,34 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { AuthData } from "../auth/AuthWrapper";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [err, seterr] = useState("");
-
-  const {login} = AuthData();
+  const { login } = AuthData();
+  let log;
 
   const loginfunc = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     try {
-      await login(username, password)
+      log = await login(username, password);
+      if (log === "Login Sucessful") {
+        toast.success('Login successful!', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }else{
+        toast.error(log, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     } catch (error) {
+      // If login fails, show an error toast
+      toast.error('Something went wrong. Please try again!!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.log(error);
     }
   };
@@ -24,7 +38,6 @@ const Login = () => {
       <div className="box">
         <div className="form">
           <h2>Sign In</h2>
-          <h5>{err}</h5>
           <div className="inputBox">
             <input
               type="text"

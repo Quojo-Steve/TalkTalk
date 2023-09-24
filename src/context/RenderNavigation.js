@@ -3,6 +3,7 @@ import { AuthData } from "../auth/AuthWrapper";
 import { nav } from "../navigation/navigation";
 import { useEffect } from "react";
 
+
 export const RenderRoutes = () => {
   const { isAuthenticated } = AuthData();
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export const RenderRoutes = () => {
         }
       }
     });
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate,location.pathname]);
 
   return (
     <Routes>

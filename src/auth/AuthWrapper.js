@@ -24,31 +24,33 @@ export const AuthWrapper = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const login = (userName, password) => {
-    let loginUser = async () => {
-      let response = await fetch(" http://127.0.0.1:8000/api/token/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: userName, password: password }),
-      });
-      let data = await response.json();
-
-      if (response.status === 200) {
-        setAuthTokens(data);
-        let access = jwt_decode(data.access);
-        setUser(access);
-        setisAuthenticated(true);
-        localStorage.setItem("authTokens", JSON.stringify(data));
-        let profileimage = "http://127.0.0.1:8000/" + user.image;
-        setImage(profileimage);
-        navigate("/");
-      } else {
-        alert("Something went wrong!!");
-      }
-    };
-    loginUser();
+  const login = async (userName, password) => {
+    let response = await fetch(" http://127.0.0.1:8000/api/token/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: userName, password: password }),
+    });
+    let data = await response.json();
+  
+    if (response.status === 200) {
+      setAuthTokens(data);
+      let access = jwt_decode(data.access);
+      setUser(access);
+      setisAuthenticated(true);
+  
+      // Set the image here
+      let profileimage = "http://127.0.0.1:8000/" + access.image;
+      setImage(profileimage);
+  
+      localStorage.setItem("authTokens", JSON.stringify(data));
+      navigate("/");
+      return "Login Sucessful";
+    } else if (response.status === 401) {
+      return "Login failed. Please check your credentials and try again.";
+    }
+    updateToken();
   };
 
   const logout = async () => {
@@ -72,6 +74,7 @@ export const AuthWrapper = () => {
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       let profileimage = "http://127.0.0.1:8000/" + user.image;
+      console.log(profileimage)
       setImage(profileimage);
     } else {
       logout();
