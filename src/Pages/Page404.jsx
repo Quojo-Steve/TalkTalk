@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Page.css"
 
-export const Page404 = () => {
+const Page404 = () => {
   return (
     <div className='badi'>
       <div className="container">
@@ -14,3 +14,5 @@ export const Page404 = () => {
     </div>
   )
 }
+
+export default Page404

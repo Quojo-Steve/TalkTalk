@@ -28,8 +28,6 @@ const Display = () => {
 
   return (
     <>
-    
-   
     <div className="mother">
       <div className="topside">
       

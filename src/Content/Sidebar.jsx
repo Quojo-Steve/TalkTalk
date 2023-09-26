@@ -120,7 +120,7 @@ const Sidebar = () => {
           </div>
           <hr />
           <div className="link">
-            <a href="">Edit Profile</a>
+            <a href="viewprofile">Edit Profile</a>
             <a href="">Create Room</a>
             <a href="">Logout</a>
           </div>

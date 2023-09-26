@@ -1,12 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { RenderRoutes } from "../context/RenderNavigation";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 export const AuthData = () => useContext(AuthContext);
 
-export const AuthWrapper = () => {
+export const AuthWrapper = ({children }) => {
   const [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? jwt_decode(localStorage.getItem("authTokens"))
@@ -101,11 +100,7 @@ export const AuthWrapper = () => {
     <AuthContext.Provider
       value={{ user, isAuthenticated, login, logout, authTokens, image }}
     >
-      {loading ? null : (
-        <>
-          <RenderRoutes />
-        </>
-      )}
+      {children}
     </AuthContext.Provider>
   );
 };

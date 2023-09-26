@@ -40,11 +40,11 @@ const Login = () => {
           <h2>Sign In</h2>
           <div className="inputBox">
             <input
-              type="text"
+              type="email"
               required="required"
               onChange={(e) => setUsername(e.target.value)}
             />
-            <span>Username</span>
+            <span>Email</span>
             <i></i>
           </div>
           <div className="inputBox">
