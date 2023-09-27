@@ -22,16 +22,15 @@ function App() {
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<Welcome />}>
                 <Route path=":id" element={<Main />} />
-                <Route path="/*" element={<Page404 />} />
               </Route>
-              <Route path="*" element={<Page404 />} />
               <Route path="/viewprofile" element={<Profile />} />
+              <Route path="/*" element={<Page404 />} />
             </Route>
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/*" element={<Page404 />} />
             <Route path="/name" element={<Name />} loader={dataLoader} />
+            <Route path="/*" element={<Page404 />} />
           </Routes>
         </AuthWrapper>
       </Router>

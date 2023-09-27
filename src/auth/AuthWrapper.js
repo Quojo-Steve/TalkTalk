@@ -14,7 +14,6 @@ export const AuthWrapper = ({children }) => {
   const [isAuthenticated, setisAuthenticated] = useState(() =>
     localStorage.getItem("authTokens") ? true : false
   );
-  const [image, setImage] = useState("");
   const [authTokens, setAuthTokens] = useState(
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
@@ -38,11 +37,6 @@ export const AuthWrapper = ({children }) => {
       let access = jwt_decode(data.access);
       setUser(access);
       setisAuthenticated(true);
-  
-      // Set the image here
-      let profileimage = "http://127.0.0.1:8000/" + access.image;
-      setImage(profileimage);
-  
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
       return "Login Sucessful";
@@ -60,7 +54,7 @@ export const AuthWrapper = ({children }) => {
   };
 
   let updateToken = async () => {
-    let response = await fetch(" http://127.0.0.1:8000/api/token/refresh/", {
+    let response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,14 +66,27 @@ export const AuthWrapper = ({children }) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      let profileimage = "http://127.0.0.1:8000/" + user.image;
-      console.log(profileimage)
-      setImage(profileimage);
     } else {
       logout();
     }
     if (loading) {
       setLoading(false);
+    }
+  };
+
+  let profile = async () => {
+    let res = await fetch("http://127.0.0.1:8000/api/profile/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access), // Added a space after "Bearer"
+      },
+    });
+    let data = await res.json();
+    if(res.status === 200){
+     return data
+    }else if(res.statusText === 'Unauthorized'){
+     logout()
     }
   };
 
@@ -98,7 +105,7 @@ export const AuthWrapper = ({children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, authTokens, image }}
+      value={{ user, isAuthenticated, login, logout, authTokens, profile }}
     >
       {children}
     </AuthContext.Provider>

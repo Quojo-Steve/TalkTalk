@@ -17,16 +17,22 @@ import { AuthData } from "../auth/AuthWrapper";
 const Sidebar = () => {
   const [isOpen, setisOpen] = useState(true);
   const [theme, settheme] = useState(true);
-  const [data, setData] = useState(null);
-  const { logout } = AuthData();
-  const { image } = AuthData();
+  const [data, setData] = useState();
+  const { logout, profile } = AuthData();
 
   const logoutfunc = async (e) => {
     await logout();
   };
 
+  const profilefunc = async (e) => {
+    const profileData = await profile(); // Call the profile function and await the result
+    let image = "http://127.0.0.1:8000/" + profileData.image
+    setData(image); // Set the profileData in the state
+  };
+
+
   useEffect(() => {
-    setData(image);
+    profilefunc();
   }, []);
 
   return (
@@ -42,9 +48,9 @@ const Sidebar = () => {
           </div>
 
           <div className="user">
-            {image ? (
+            {data ? (
               <img
-                src={image}
+                src={data}
                 alt="Profile"
                 className="user-img1"
                 onClick={() => setisOpen(!isOpen)}

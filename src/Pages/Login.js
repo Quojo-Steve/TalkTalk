@@ -25,7 +25,6 @@ const Login = () => {
         });
       }
     } catch (error) {
-      // If login fails, show an error toast
       toast.error('Something went wrong. Please try again!!', {
         position: toast.POSITION.TOP_RIGHT,
       });
