@@ -3,7 +3,7 @@ import React,{useState,useEffect} from "react";
 import picture from "../images/IMG_1600.JPG";
 import message from "../images/chat_48px_green.png";
 import { useParams } from "react-router-dom";
-import { Dummy } from '../Dummy';
+import { fetchData } from '../utils/Dummy';
 
 const Main = (props) => {
   const { id } = useParams();
@@ -41,8 +41,8 @@ const Main = (props) => {
       <div className={main}>
         {param ?
           <div className="bg-slate-700 text-yellow-300">
-            <h1>{Dummy[id - 1].name}</h1>{" "}
-            <p>{Dummy[id - 1].username}</p>{" "}
+            <h1>{fetchData[id - 1].name}</h1>{" "}
+            <p>{fetchData[id - 1].username}</p>{" "}
           </div>
           :
           <div>{props.type}</div>

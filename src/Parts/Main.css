@@ -4,6 +4,7 @@
     top: 0;
     left: 330px;
     transition: all 0.5s ease;
+    background: red;
     width: 68.4vw;
     padding: 10px 2rem;
 }

@@ -9,7 +9,7 @@ import message from "../images/chat_48px_green.png";
 import "./Chat.css";
 import "./Main.css";
 import { useNavigate } from "react-router-dom";
-import { Dummy } from "../Dummy";
+import { fetchData } from "../utils/Dummy";
 import { useParams } from "react-router-dom";
 import Display from "./Display";
 
@@ -19,6 +19,7 @@ const Chat = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [param, setParam] = useState(false);
+  const [data, setData] = useState([]);
 
   function renderer() {
     setParam(true);
@@ -30,6 +31,17 @@ const Chat = () => {
       setParam(false);
     }
   }, []);
+
+  useEffect(() => {
+    fetchData()
+      .then((fetchedData) => {
+        setData(fetchedData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   let main = "main",
     people = "mainpeoplenot",
     groups = "maingroupnot";
@@ -82,10 +94,6 @@ const Chat = () => {
     peoples = "peoplesssnot";
     grouping = "groupsss";
   }
-  console.log(group);
-  console.log(which);
-  console.log(peoples);
-  console.log(grouping);
   return (
     <>
       <div style={{ position: "relative" }}>
@@ -138,19 +146,19 @@ const Chat = () => {
         </div>
 
         <div className={isChat ? "chat" : "chatnot"}>
-          {Dummy.map((perso) => {
+          {data.map((perso) => {
             return (
               <a
                 className="chaturl1 selected cursor-pointer"
                 onClick={() => {
-                  navigate(`/home/${perso.id}`);
+                  navigate(`/${perso.id}`);
                   renderer();
                   grouping1();
                 }}
               >
-                <img src={perso.image} alt="" className="image" />
+                <img src={"http://127.0.0.1:8000/"+perso.image} alt="" className="image" />
                 <div className="details">
-                  <p>{perso.name}</p>
+                  <p>{perso.full_name}</p>
                   <p className="username">{perso.username}</p>
                 </div>
               </a>
@@ -185,48 +193,29 @@ const Chat = () => {
       <div>
         <div className={main}>
           {param ? (
-            // <div className="chatarea">
-            //   <div className="bg-slate-700 text-red-300">
-            //     <img src={Dummy[id - 1].image} alt="" />
-            //     <h1>{Dummy[id - 1].name}</h1> <p>{Dummy[id - 1].username}</p>{" "}
-            //   </div>
-            // </div>
-          <Display />
+          <Display prop={data} />
           ) : (
             <div>{group}</div>
           )}
         </div>
         <div className={people}>
-          {Dummy.map((persona) => {
-            return (
-              <a
-                href=""
-                className="single p-4"
-                onClick={() => {
-                  navigate(`/home/${persona.id}`);
-                  renderer();
-                }}
-              >
-                <img
-                  src={persona.image}
-                  alt=""
-                  className="h-14 w-14 rounded-full object-cover "
-                />
-                <div>
-                  <p className="text-center text-xl">{persona.name}</p>
-                  <p className="text-xs text-center">{persona.username}</p>
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                  <img
-                    src={message}
-                    alt=""
-                    className="w-10 h-10 bg-green-500 rounded-full p-2"
-                  />
-                  <b className="text-green-500">Message</b>
-                </div>
-              </a>
-            );
-          })}
+        {data.map((person) => (
+          <a
+            key={person.id}
+            className="chaturl1 selected cursor-pointer"
+            onClick={() => {
+              navigate(`/${person.id}`);
+              renderer();
+              grouping1();
+            }}
+          >
+            <img src={person.image} alt="" className="image" />
+            <div className="details">
+              <p>{person.name}</p>
+              <p className="username">{person.username}</p>
+            </div>
+          </a>
+        ))}
         </div>
         <div className={groups}>
           <div href="" className="single p-4">

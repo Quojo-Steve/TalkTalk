@@ -28,12 +28,19 @@ const Profile = () => {
     const file = e.target.files[0];
     setSelectedImage(file); 
   };
-
+//dont forget to verify image
   const profileUpdate = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     if (selectedImage) {
-      formData.append("image", selectedImage);
+      if(selectedImage.type === "image/jpeg"){
+        formData.append("image", selectedImage);
+      }else{
+        toast.error("Not an image selected", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        return
+      }
     }
     formData.append("full_name", fullname);
     formData.append("bio", newbio);
