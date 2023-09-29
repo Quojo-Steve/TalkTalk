@@ -9,9 +9,9 @@ import message from "../images/chat_48px_green.png";
 import "./Chat.css";
 import "./Main.css";
 import { useNavigate } from "react-router-dom";
-import { fetchData } from "../utils/Dummy";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Display from "./Display";
+import { AuthData } from "../auth/AuthWrapper";
 
 const Chat = () => {
   const [isChat, setischat] = useState(true);
@@ -20,6 +20,8 @@ const Chat = () => {
   const { id } = useParams();
   const [param, setParam] = useState(false);
   const [data, setData] = useState([]);
+  const [d, setId] = useState();
+  const { fetchData } = AuthData();
 
   function renderer() {
     setParam(true);
@@ -148,23 +150,29 @@ const Chat = () => {
         <div className={isChat ? "chat" : "chatnot"}>
           {data.map((perso) => {
             return (
-              <a
+              <Link
+                to={`/${perso.user.id}`} // Use Link to navigate to the profile page
+                key={perso.id}
                 className="chaturl1 selected cursor-pointer"
                 onClick={() => {
-                  navigate(`/${perso.id}`);
                   renderer();
                   grouping1();
                 }}
               >
-                <img src={"http://127.0.0.1:8000/"+perso.image} alt="" className="image" />
+                <img
+                  src={"http://127.0.0.1:8000/" + perso.image}
+                  alt=""
+                  className="image"
+                />
                 <div className="details">
-                  <p>{perso.full_name}</p>
-                  <p className="username">{perso.username}</p>
+                  <p>{perso.user.username}</p>
+                  <p className="username">{perso.full_name}</p>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
+
         <div className={isChat ? "groupsnot" : "groups"}>
           <div className="chaturl selected">
             <a href="">
@@ -191,31 +199,27 @@ const Chat = () => {
       </div>
 
       <div>
-        <div className={main}>
-          {param ? (
-          <Display prop={data} />
-          ) : (
-            <div>{group}</div>
-          )}
-        </div>
+        <div className={main}>{param ? <Display /> : <div>{group}</div>}</div>
         <div className={people}>
-        {data.map((person) => (
-          <a
-            key={person.id}
-            className="chaturl1 selected cursor-pointer"
-            onClick={() => {
-              navigate(`/${person.id}`);
-              renderer();
-              grouping1();
-            }}
-          >
-            <img src={person.image} alt="" className="image" />
-            <div className="details">
-              <p>{person.name}</p>
-              <p className="username">{person.username}</p>
-            </div>
-          </a>
-        ))}
+          {data.map((perso) => {
+            return (
+              <Link
+                to={`/${perso.user.id}`} // Use Link to navigate to the profile page
+                key={perso.id}
+                className="chaturl1 selected cursor-pointer"
+              >
+                <img
+                  src={"http://127.0.0.1:8000/" + perso.image}
+                  alt=""
+                  className="image"
+                />
+                <div className="details">
+                  <p>{perso.user.username}</p>
+                  <p className="username">{perso.full_name}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
         <div className={groups}>
           <div href="" className="single p-4">

@@ -74,6 +74,27 @@ export const AuthWrapper = ({children }) => {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      let res = await fetch("http://localhost:8000/api/friends/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access), // Added a space after "Bearer"
+        },
+      });
+      let data = await res.json();
+      if (res.status === 200) {
+        return data;
+      }else{
+        throw new Error(`Error fetching data: ${res.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
+
   let profile = async () => {
     let res = await fetch("http://127.0.0.1:8000/api/profile/", {
       method: "GET",
@@ -105,7 +126,7 @@ export const AuthWrapper = ({children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, authTokens, profile }}
+      value={{ user, isAuthenticated, login, logout, authTokens, profile, fetchData }}
     >
       {children}
     </AuthContext.Provider>

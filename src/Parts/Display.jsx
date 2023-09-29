@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchData } from "../utils/Dummy";
 import { FakeMessage } from "../FakeMessage";
 import {
   GrFormClose,
@@ -25,65 +24,104 @@ import { FiSend } from "react-icons/fi";
 import { AiFillPicture } from "react-icons/ai";
 import Incoming from "./Incoming";
 import Sending from "./Sending";
+import { AuthData } from "../auth/AuthWrapper";
 
-const Display = ({ prop }) => {
+const Display = () => {
   const { id } = useParams();
   const [isOpen, setisOpen] = useState(false);
-  const [data, setData] = useState([]);
+  const { authTokens } = AuthData();
+  const [userData, setUserData] = useState(null); // State to store fetched user data
+
+  const getUserData = async (a) => {
+    try {
+      let res = await fetch(`http://localhost:8000/api/person/${a}/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      });
+      let data = await res.json();
+      if (res.status === 200) {
+        return data;
+      } else {
+        throw new Error(`Error fetching data: ${res.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
-    console.log(prop[id].image);
-    setData(prop);
-    console.log(data);
-  }, [prop]);
+    async function fetchUserData() {
+      try {
+        const data = await getUserData(id);
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchUserData();
+  }, [id]);
 
+  if (userData) {
+    console.log("Fetched user data:", userData);
+  }
+  //make loading animation
   return (
     <>
-      <div className="mother">
-        <div className="topside">
-          {/* <img
-            src={prop[id - 1].image}
-            alt=""
-            onClick={() => setisOpen(!isOpen)}
-          /> */}
-          <div className="detailss">
-            {/* <h1>{data[id - 1].name}</h1> <p>{data[id - 1].username}</p>{" "} */}
-          </div>
-          <span></span>
-          <div className="middleparts">
-            <BsFillVolumeUpFill className="svgs" />
-            <BsSearch className="svgs" />
-          </div>
+      {userData ? (
+        <div className="mother">
+          <div className="topside">
+            <img
+              src={"http://127.0.0.1:8000/" + userData.profile.image}
+              alt=""
+              onClick={() => setisOpen(!isOpen)}
+            />
+            <div className="detailss">
+              <h1>{userData.profile.full_name}</h1>{" "}
+              <p>{userData.user.username}</p>{" "}
+            </div>
+            <span></span>
+            <div className="middleparts">
+              <BsFillVolumeUpFill className="svgs" />
+              <BsSearch className="svgs" />
+            </div>
 
-          <BsTelephone className="svgs" />
-          <BsCameraVideo className="svgs" />
-          <BsGrid className="svgs" />
-          <BsThreeDotsVertical className="svgs" />
+            <BsTelephone className="svgs" />
+            <BsCameraVideo className="svgs" />
+            <BsGrid className="svgs" />
+            <BsThreeDotsVertical className="svgs" />
+          </div>
+          {/* Ask Eugene */}
+          <div className="chatside flex justify-between overflow-y-auto flex-col">
+            {FakeMessage.map((messages) =>
+              // console.log(messages.message);
+              messages.name === "incoming" ? (
+                <Incoming message={messages.message} />
+              ) : (
+                <Sending message={messages.message} />
+              )
+            )}
+          </div>
+          <div className="send-message">
+            <AiFillPicture className="icons" />
+            <BsEmojiLaughing className="icons" />
+            <BsPlusLg className="icons" />
+            <input
+              type="text"
+              className="input"
+              placeholder="Write a message..."
+            />
+            <BiMicrophone className="icons" />
+            <FiSend className="icon-send" />
+          </div>
         </div>
-        {/* Ask Eugene */}
-        <div className="chatside flex justify-between overflow-y-auto flex-col">
-          {FakeMessage.map((messages) =>
-            // console.log(messages.message);
-            messages.name === "incoming" ? (
-              <Incoming message={messages.message} />
-            ) : (
-              <Sending message={messages.message} />
-            )
-          )}
-        </div>
-        <div className="send-message">
-          <AiFillPicture className="icons" />
-          <BsEmojiLaughing className="icons" />
-          <BsPlusLg className="icons" />
-          <input
-            type="text"
-            className="input"
-            placeholder="Write a message..."
-          />
-          <BiMicrophone className="icons" />
-          <FiSend className="icon-send" />
-        </div>
-      </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+
       <div className={isOpen ? "profile" : "profilenot"}>
         <div className="headings">
           <div className="t">
@@ -94,9 +132,13 @@ const Display = ({ prop }) => {
         </div>
 
         <div className="infoo">
-          {/* <img src={data[id - 1].image} alt="" className="rounded-2xl shadow-md shadow-black h-64 object-cover w-full" /> */}
-          {/* <h1 className="font-bold mt-3">{data[id - 1].name}</h1> */}
-          {/* <p>{data[id - 1].username}</p>{" "} */}
+          <img
+            src={"http://127.0.0.1:8000/" + userData.profile.image}
+            alt=""
+            className="rounded-2xl shadow-md shadow-black h-64 object-cover w-full"
+          />
+          <h1 className="font-bold mt-3">{userData.profile.full_name}</h1>
+          <p>{userData.user.username}</p>{" "}
         </div>
         <div className="socials">
           <BsInstagram className="insta" />
