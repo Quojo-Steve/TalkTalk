@@ -81,7 +81,9 @@ const Display = () => {
 
   const sendmessage = async (a) => {
     try {
+      // a.preventDefault();
       const formData = new FormData();
+      console.log(mess)
       formData.append("body", mess);
       let res = await fetch(`http://localhost:8000/api/sendmessage/${a}/`, {
         method: "POST",
@@ -89,12 +91,12 @@ const Display = () => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens.access),
         },
-        body: JSON.stringify({ body: mess }),
+        body: JSON.stringify({ body: mess}),
       });
       let data = await res.json();
-      if (res.status === 201) {
-        const updatedMessages = await getMessages(a);
-        setMessages(updatedMessages);
+      if (res.status === 200) {
+        setMessages(data);
+        // await getUserData(a);
       } else {
         throw new Error(`Error fetching data: ${res.statusText}`);
       }
@@ -105,37 +107,34 @@ const Display = () => {
   };
 
   const sender = async () => {
-    await sendmessage(id);
+    await sendmessage(id)
   };
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchUserData() {
       try {
-        await getUserData(id);
-        await getMessages(id);
+        const data = await getUserData(id);
+        const mess = await getMessages(id);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching user data:", error);
       }
     }
-    fetchData();
+    fetchUserData();
   }, [id]);
 
-  // Only render the component when the loading state is false
-  if (loading) {
-    return (
-      <div>
-        <FadeLoader
-          className="flex justify-center items-center min-h-full"
-          size={30}
-          color={"dodgerblue"}
-          loading={loading}
-        />
-      </div>
-    );
-  }
-
+  //make loading animation
   return (
     <>
+      {loading ? ( // Render loading spinner based on the loading state
+        <div>
+          <FadeLoader
+            className="flex justify-center items-center min-h-full"
+            size={30}
+            color={"dodgerblue"}
+            loading={loading}
+          />
+        </div>
+      ) : (
         <div>
           <div className="mother">
             <div className="topside">
@@ -161,11 +160,11 @@ const Display = () => {
             </div>
             <div className="chatside flex justify-between overflow-y-auto flex-col">
               {messages.map((m) =>
-                // console.log(messages.message);
+                // console.log(m.msg_sender)
                 m.msg_sender === user.id ? (
-                  <Incoming message={m.body} />
-                ) : (
                   <Sending message={m.body} />
+                ) : (
+                  <Incoming message={m.body} />
                 )
               )}
             </div>
@@ -213,6 +212,7 @@ const Display = () => {
             </div>
           </div>
         </div>
+      )}
     </>
   );
 };
