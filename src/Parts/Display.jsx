@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom"; // Import useHistory
 import { FakeMessage } from "../FakeMessage";
 import {
   GrFormClose,
@@ -26,6 +26,8 @@ import Incoming from "./Incoming";
 import Sending from "./Sending";
 import { AuthData } from "../auth/AuthWrapper";
 import FadeLoader from "react-spinners/FadeLoader";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Display = () => {
   const { id } = useParams();
@@ -35,6 +37,9 @@ const Display = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mess, setMess] = useState();
+
+  const messagesContainerRef = useRef(null);
+  // const history = useHistory(); // Get the history object
 
   const getUserData = async (a) => {
     try {
@@ -68,6 +73,10 @@ const Display = () => {
       });
       let data = await res.json();
       if (res.status === 200) {
+        // Sort messages by message ID in ascending order
+        data.sort((a, b) => a.id - b.id);
+
+        // Set the sorted messages in the state
         setMessages(data);
         setLoading(false);
       } else {
@@ -81,9 +90,14 @@ const Display = () => {
 
   const sendmessage = async (a) => {
     try {
-      // a.preventDefault();
+      if (!mess || mess.trim() === "") {
+        toast.error("No message inputted", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        return; // Don't send empty messages
+      }
+
       const formData = new FormData();
-      console.log(mess)
       formData.append("body", mess);
       let res = await fetch(`http://localhost:8000/api/sendmessage/${a}/`, {
         method: "POST",
@@ -91,12 +105,16 @@ const Display = () => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens.access),
         },
-        body: JSON.stringify({ body: mess}),
+        body: JSON.stringify({ body: mess }),
       });
       let data = await res.json();
       if (res.status === 200) {
+        // Sort messages by message ID in ascending order
+        data.sort((a, b) => a.id - b.id);
+
+        // Set the sorted messages in the state
         setMessages(data);
-        // await getUserData(a);
+        setMess(""); // Clear the input field after sending
       } else {
         throw new Error(`Error fetching data: ${res.statusText}`);
       }
@@ -107,19 +125,44 @@ const Display = () => {
   };
 
   const sender = async () => {
-    await sendmessage(id)
+    await sendmessage(id);
   };
 
   useEffect(() => {
     async function fetchUserData() {
       try {
         const data = await getUserData(id);
-        const mess = await getMessages(id);
+        const mess1 = await getMessages(id);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     }
     fetchUserData();
+  }, [id]);
+
+  useEffect(() => {
+    // Scroll to the bottom of the messages container
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  // Listen to changes in the "id" parameter
+  useEffect(() => {
+    // Reset messages to an empty array when the parameter changes
+    setMessages([]);
+    setLoading(true);
+    // Fetch new messages for the updated "id"
+    async function fetchNewData() {
+      try {
+        const data = await getUserData(id);
+        const mess1 = await getMessages(id);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchNewData();
   }, [id]);
 
   //make loading animation
@@ -158,13 +201,19 @@ const Display = () => {
               <BsGrid className="svgs" />
               <BsThreeDotsVertical className="svgs" />
             </div>
-            <div className="chatside flex justify-between overflow-y-auto flex-col">
+            <div
+              className="chatside flex justify-between overflow-y-auto flex-col scroll-container"
+              ref={messagesContainerRef}
+            >
               {messages.map((m) =>
-                // console.log(m.msg_sender)
-                m.msg_sender === user.id ? (
-                  <Sending message={m.body} />
+                m.msg_sender == user.user_id ? (
+                  <div key={m.id}>
+                    <Sending message={m.body} />
+                  </div>
                 ) : (
-                  <Incoming message={m.body} />
+                  <div key={m.id}>
+                    <Incoming message={m.body} />
+                  </div>
                 )
               )}
             </div>
@@ -191,7 +240,10 @@ const Display = () => {
               </div>
               <GrFormClose
                 className="clos"
-                onClick={() => setisOpen(!isOpen)}
+                onClick={() => {
+                  setisOpen(!isOpen);
+                  // history.push(`/your-desired-route`); // Redirect to a desired route
+                }}
               />
             </div>
 
