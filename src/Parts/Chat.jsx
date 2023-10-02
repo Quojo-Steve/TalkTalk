@@ -24,6 +24,7 @@ const Chat = () => {
   const [d, setId] = useState();
   const { fetchData } = AuthData();
   const [searchOpen, setSearchOpen] = useState(true);
+  const [searchInput, setSearchInput] = useState("");
 
   function renderer() {
     setParam(true);
@@ -99,13 +100,19 @@ const Chat = () => {
     grouping = "groupsss";
   }
 
-  const searchopen = () => {
-    if (searchOpen) {
-      setSearchOpen(false);
-    } else {
-      setSearchOpen(true);
-    }
+  const filteredData = data.filter((perso) => {
+    const fullName = perso.full_name.toLowerCase();
+    const username = perso.user.username.toLowerCase();
+    const search = searchInput.toLowerCase();
+
+    // Check if either the full name or username includes the search input
+    return fullName.includes(search) || username.includes(search);
+  });
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
   };
+  
   return (
     <>
       <div style={{ position: "relative" }}>
@@ -117,16 +124,25 @@ const Chat = () => {
           <img
             src={search}
             alt=""
-            onClick={searchopen}
+            onClick={() => setSearchOpen(!searchOpen)}
             className={`${searchOpen ? "block" : "hidden"} duration-200`}
           />
-          <GrFormClose className={`${searchOpen ? "hidden" : "block"} new duration-200 text-lg`} onClick={searchopen} />
+
+          <GrFormClose
+            className={`${
+              searchOpen ? "hidden" : "block"
+            } new duration-200 text-lg`}
+            onClick={() => {setSearchOpen(!searchOpen); setSearchInput("")}}
+          />
+
           <input
             type="search"
             placeholder="Search..."
             className={`input ${
               searchOpen ? "hidden" : "block"
             } border-b-2 outline-none`}
+            value={searchInput}
+            onChange={handleSearchInputChange}
           />
         </div>
         <div className="linkss">
@@ -171,7 +187,7 @@ const Chat = () => {
         </div>
 
         <div className={isChat ? "chat" : "chatnot"}>
-          {data.map((perso) => {
+          {filteredData.map((perso) => {
             return (
               <Link
                 to={`/${perso.user.id}`} // Use Link to navigate to the profile page
