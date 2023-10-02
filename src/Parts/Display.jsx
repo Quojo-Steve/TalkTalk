@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom"; // Import useHistory
-import { FakeMessage } from "../FakeMessage";
 import {
   GrFormClose,
   GrFacebookOption,
@@ -28,6 +27,7 @@ import { AuthData } from "../auth/AuthWrapper";
 import FadeLoader from "react-spinners/FadeLoader";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { fetchData } from "../utils/Dummy";
 
 const Display = () => {
   const { id } = useParams();
@@ -165,11 +165,27 @@ const Display = () => {
     fetchNewData();
   }, [id]);
 
+  // useEffect(() => {
+  //   async function fetchNewData() {
+  //     try {
+  //       const data = await getUserData(id);
+  //       const mess1 = await getMessages(id);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   }
+  //   let interval = setInterval(() => {
+  //     fetchNewData();
+  //     console.log("fect")
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [id]);
+
   //make loading animation
   return (
     <>
       {loading ? ( // Render loading spinner based on the loading state
-        <div>
+        <div className="body">
           <FadeLoader
             className="flex justify-center items-center min-h-full"
             size={30}
@@ -242,7 +258,6 @@ const Display = () => {
                 className="clos"
                 onClick={() => {
                   setisOpen(!isOpen);
-                  // history.push(`/your-desired-route`); // Redirect to a desired route
                 }}
               />
             </div>

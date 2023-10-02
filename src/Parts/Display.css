@@ -64,6 +64,7 @@
 .chatside{
     padding-bottom: 10px;
     max-height: 70vh;
+    min-height: 70vh;
     margin-bottom: 5px;
 }
 .chatside::-webkit-scrollbar{
@@ -112,7 +113,7 @@
     color: white;
     padding: 5px 10px;
     background: transparent;
-    outline: none;
+    /* outline: none; */
 }
 .profile{
     position: absolute;

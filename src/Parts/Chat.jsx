@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
 import Display from "./Display";
 import { AuthData } from "../auth/AuthWrapper";
+import { GrFormClose } from "react-icons/gr";
 
 const Chat = () => {
   const [isChat, setischat] = useState(true);
@@ -22,6 +23,7 @@ const Chat = () => {
   const [data, setData] = useState([]);
   const [d, setId] = useState();
   const { fetchData } = AuthData();
+  const [searchOpen, setSearchOpen] = useState(true);
 
   function renderer() {
     setParam(true);
@@ -96,6 +98,14 @@ const Chat = () => {
     peoples = "peoplesssnot";
     grouping = "groupsss";
   }
+
+  const searchopen = () => {
+    if (searchOpen) {
+      setSearchOpen(false);
+    } else {
+      setSearchOpen(true);
+    }
+  };
   return (
     <>
       <div style={{ position: "relative" }}>
@@ -104,7 +114,20 @@ const Chat = () => {
             <h1>Chats</h1>
             <h4>Start New conversation</h4>
           </div>
-          <img src={search} alt="" />
+          <img
+            src={search}
+            alt=""
+            onClick={searchopen}
+            className={`${searchOpen ? "block" : "hidden"} duration-200`}
+          />
+          <GrFormClose className={`${searchOpen ? "hidden" : "block"} new duration-200 text-lg`} onClick={searchopen} />
+          <input
+            type="search"
+            placeholder="Search..."
+            className={`input ${
+              searchOpen ? "hidden" : "block"
+            } border-b-2 outline-none`}
+          />
         </div>
         <div className="linkss">
           <button href="/home" onClick={grouping1} className={which}>

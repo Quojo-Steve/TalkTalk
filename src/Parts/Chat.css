@@ -24,6 +24,15 @@ body{
     padding: 5px;
     border-radius: 50%;
     cursor: pointer;
+    color: white;
+}
+.new{
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.411);
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 .linkss{
     display: flex;
